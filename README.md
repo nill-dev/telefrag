@@ -1,48 +1,23 @@
 # Telefrag
 
-Telefrag is a cross-platform library, service, and suite of utilities that allow you to rapidly develop Telegram integrations (bots, clients, payments, web authentication) in either .NET or JavaScript with a toolkit full of ready-made reusable components.  Telefrag abstracts away all of Telegram's API details, persistent state and storage, webhooks, certificates, web server configuration, authentication/authorization, and more.  Make your bots highly-available by creating a multi-node cluster.
+Telefrag is a .NET Core library for interacting with Telegram using its various APIs and rapid development of highly composable components.  The primary goal of Telefrag was to decouple Telegram's nuances from C# developers and create a C#-friendly way of tying existing apps into Telegram.  The secondary goal was to make it easy for normal users to run their own custom bots with pluggable personalities or "layers" which can be offered as part of an ecosystem.
 
-``` csharp
-    public class RandomBot : FragBot
-    {
-        private Random RNG = new Random();
+See the [Telefrag wiki](https://github.com/nillkitty/Telefrag/wiki) for more information and documentation as development continues.
 
-        [BotCommand(Description = "Gets a random number between 0 and 1.")]
-        public async Task Random(Context c)
-        {
-            await c.Reply($"Random number: {RNG.Next()}");
-        }
+The scope of the Telefrag project has been refactored into these components/phases:
 
-        [BotCommand(Description = "Gets a random number between min and max.")]
-        [RequiredParam(0, "min")]
-        [RequiredParam(1, "max")]
-        public async Task Random(Context c, Argument min, Argument max)
-        {
-            await c.Reply($"Random number: {RNG.Next(min, max)}");
-        }
-    }
-```
-This example creates a bot that will accept either `/random` or `/random <min> <max>`, and will reply to the user's message directly with the result.   
-
-The bot automatically will respond to `/start` and `/help` with appropriate replies without any required configuration.
-
-## Notable Features 
-
-* Rich class library including counters, timers, commands, callbacks, tracers, loggers, and so much more.
-* Database access abstracted away.  Pluggable database provider framework allows custom data stores.
-* Span bots across multiple nodes in a cluster/farm -- automatic state/config sync between cluster nodes with active/passive (default) and active/active (requires a load balancer or GSLB) modes
-* Web UI included
-* Native Telegram authentication, as well as Windows authentication for API and UI access
-* Automatic webhook and polling system configures tests, configures, and manages webhooks for you with automatic certificate management
-* Multiple-instance aware
-* Fully asynchronous, cross-platform, and built on .NET Core 3.1
-
-## Hosting
-
-| Hosting Mode | Platforms | Description |
+| Phase | Status | Package | Description |
 |--|--|--|
-|**Command Line** | Windows, Linux, MacOS | Telefrag run self-hosted from a self-contained executable;  this allows you to spawn the process in the background on Linux and MacOS for use as a system service. <br /><br />Log events are written to stdout, and console commands can be entered from stdin.
-|**Windows Service** | Windows | Telefrag runs self-hosted in a Windows Service. <br /><br />Useful for running on Windows as a standalone service (e.g. not as part of a website you're integrating with Telegram and/or bots with a UI)
-|**IIS** | Windows | Add Telefrag to your own ASP.NET web application.  Telefrag seamlessly integrates into your application's request pipeline and allows you to directly integrate your web app with Telegram without any intermediary API.
-
+| 1 | In Development | `Telefrag.Common`  | Common utilities and constructs;  required by all other packages.  |
+| 1 | In Development | `Telefrag.Bots` | Bot API functionality;  exposes **Bot** which allows sending and receiving Updates and Events at a low level.  When using or deriving from Bot, all update handling,  string parsing,  state tracking, etc. must be done by the consumer.
+| 2 | Not Started | `Telefrag.Data.SqlServer` | Allows use of a SQL Server as an ObjectStore
+| 2 | Not Started | `Telefrag.Bots.XBot` | **XBot** (not final name) is a higher level subclass of **Bot** that provides a more rapid development experience via the use of **Artifacts**, **Plugins** and added **Security**
+| 3 | Not Started | `Telefrag.Bots.Utility` | **UtilityBot** is a bot useful for diagnostics or learning the Telefrag framework.  It allows debug and diagsnotics access to Telefrag via Telegram.
+| 4 | Not Started | `Telefrag.Clients` | Client API functionality;  exposes **Client** which allows connecting to Telegram as a full self-contained MTProto client.
+| 5 | Not Started | `Telefrag.Hosting` | Provides the framework needed for hosting Telefrag as a dedicated service (including ASP.NET pipeline) with administrative control and management
+| 6 | Not Started | `Telefrag.Hosts.ConsoleHost` | Console host (Kestrel/HTTP.sys)
+| 6 | Not Started | `Telefrag.Hosts.ServiceHost` | Windows Service host (Kestrel/HTTP.sys)
+| 6 | Not Started | `Telefrag.Hosts.IISHost` | IIS host
+| 7 | Not Started | `Telefrag.UI.Web` | ASP.NET-powered web administration console
+| 8 | Not Started | `Telefrag.UI.Studio` | WPF-powered thick administration console
 
