@@ -7,7 +7,7 @@ See the [Telefrag wiki](https://github.com/nillkitty/Telefrag/wiki) for more inf
 The scope of the Telefrag project has been refactored into these components/phases:
 
 | Phase | Status | Package | Description |
-|--|--|--|
+|--|--|--|--|
 | 1 | In Development | `Telefrag.Common`  | Common utilities and constructs;  required by all other packages.  |
 | 1 | In Development | `Telefrag.Bots` | Bot API functionality;  exposes **Bot** which allows sending and receiving Updates and Events at a low level.  When using or deriving from Bot, all update handling,  string parsing,  state tracking, etc. must be done by the consumer.
 | 2 | Not Started | `Telefrag.Data.SqlServer` | Allows use of a SQL Server as an ObjectStore
