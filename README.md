@@ -10,8 +10,9 @@ The scope of the Telefrag project has been refactored into these components/phas
 |--|--|--|--|
 | 1 | In Development | `Telefrag.Common`  | Common utilities and constructs;  required by all other packages.  |
 | 1 | In Development | `Telefrag.Bots` | Bot API functionality;  exposes **Bot** which allows sending and receiving Updates and Events at a low level.  When using or deriving from Bot, all update handling,  string parsing,  state tracking, etc. must be done by the consumer.
-| 2 | Not Started | `Telefrag.Data.SqlServer` | Allows use of a SQL Server as an ObjectStore
-| 2 | Not Started | `Telefrag.Bots.XBot` | **XBot** (not final name) is a higher level subclass of **Bot** that provides a more rapid development experience via the use of **Artifacts**, **Plugins** and added **Security**
+| 2 | In Development | `Telefrag.Bots.Toolkit` | The **Toolkit** is a [layer](Layers) that adds higher level abstractions such as Command, Callback, Menu, Code, etc.
+| 2 | In Development | `Telefrag.Data.SqlServer` | Allows use of a SQL Server as an ObjectStore
+| 2 | In Development | `Telefrag.Security` | Provides the default authorization model/security framework
 | 3 | Not Started | `Telefrag.Bots.Utility` | **UtilityBot** is a bot useful for diagnostics or learning the Telefrag framework.  It allows debug and diagsnotics access to Telefrag via Telegram.
 | 4 | Not Started | `Telefrag.Clients` | Client API functionality;  exposes **Client** which allows connecting to Telegram as a full self-contained MTProto client.
 | 5 | Not Started | `Telefrag.Hosting` | Provides the framework needed for hosting Telefrag as a dedicated service (including ASP.NET pipeline) with administrative control and management
